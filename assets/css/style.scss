@@ -49,6 +49,7 @@ a {
 }
 
 $beige: #f1f0ef;
+$dark: #1E1E1E;
 
 $breakpoints: (
     smallScreen: 768px,
@@ -85,7 +86,7 @@ $breakpoints: (
     @for $i from 1 through length($values) {
         .img-#{$i} {
             @each $property, $value in zip($properties, nth($values, $i)) {
-                #{$property}: #{$value * 0.8};
+                #{$property}: #{$value};
             }
         }
     }
@@ -98,13 +99,29 @@ body {
 }
 
 .wrapper {
-    background-color: $beige;
+    position: relative;
+    background-color: $dark;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     @include resp(padding, (60px 177px, 60px 135px, 40px 53px, 40px 25px));
     @include resp(gap, (60px, 60px, 40px, 40px));
+}
+
+.mask {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    background-color: white; 
+    mask-size: cover; 
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: cover;
+    -webkit-mask-repeat: no-repeat;
+    @include resp(mask-image, (url(../images/pattern-xl.svg), url(../images/pattern.svg), url(../images/pattern-md.svg), url(../images/pattern-sm.svg)));
+    @include resp(-webkit-mask-image, (url(../images/pattern-xl.svg), url(../images/pattern.svg), url(../images/pattern-md.svg), url(../images/pattern-sm.svg)));
+
 }
 
 .img-group {
