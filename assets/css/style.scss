@@ -1,0 +1,172 @@
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+*,
+ul {
+    margin: 0;
+    padding: 0;
+}
+body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+canvas,
+img,
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    overflow-wrap: break-word;
+}
+li {
+    list-style: none;
+    color: inherit;
+    font-size: inherit;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+}
+
+$beige: #f1f0ef;
+
+$breakpoints: (
+    smallScreen: 768px,
+    mediumScreen: 1024px,
+    largeScreen: 1440px,
+    xlargeScreen: 1920px
+);
+@mixin resp($property, $values) {
+    @if length($values) != 4 {
+        @error "You need to provide exactly 4 values!";
+    }
+
+    $xlarge-value: nth($values, 1);
+    $large-value: nth($values, 2);
+    $medium-value: nth($values, 3);
+    $small-value: nth($values, 4);
+
+    #{$property}: #{$xlarge-value};
+
+    @media screen and (max-width: map-get($breakpoints, largeScreen)) {
+        #{$property}: #{$large-value};
+    }
+
+    @media screen and (max-width: map-get($breakpoints, mediumScreen)) {
+        #{$property}: #{$medium-value};
+    }
+
+    @media screen and (max-width: map-get($breakpoints, smallScreen)) {
+        #{$property}: #{$small-value};
+    }
+}
+
+@mixin images($properties, $values) {
+    @for $i from 1 through length($values) {
+        .img-#{$i} {
+            @each $property, $value in zip($properties, nth($values, $i)) {
+                #{$property}: #{$value * 0.8};
+            }
+        }
+    }
+}
+
+html,
+body {
+    overflow-x: hidden;
+    overflow-x: clip;
+}
+
+.wrapper {
+    background-color: $beige;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @include resp(padding, (60px 177px, 60px 135px, 40px 53px, 40px 25px));
+    @include resp(gap, (60px, 60px, 40px, 40px));
+}
+
+.img-group {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+}
+
+$properties: (width, height, margin-top);
+$values: (
+    (642px, 802px, 0px),
+    (906px, 1132px, 0px),
+    (774px, 967px, 0px),
+    (774px, 968px, 90px),
+    (774px, 967px, 0px),
+    (510px, 614px, 176px),
+    (1038px, 1026px, 0px)
+);
+
+@include images($properties, $values);
+
+@media screen and (max-width: map-get($breakpoints, largeScreen)) {
+    $properties: (width, height, margin-top);
+    $values: (
+        (477px, 596px, 0px),
+        (675px, 844px, 0px),
+        (576px, 722px, 0px),
+        (576px, 722px, 60px),
+        (576px, 722px, 0px),
+        (378px, 474px, 124px),
+        (774px, 844px, 0px)
+    );
+
+    @include images($properties, $values);
+}
+
+@media screen and (max-width: map-get($breakpoints, mediumScreen)) {
+    $properties: (width, height, margin-top);
+    $values: (
+        (372px, 466px, 0px),
+        (528px, 660px, 0px),
+        (450px, 564px, 0px),
+        (450px, 564px, 40px),
+        (450px, 564px, 0px),
+        (294px, 368px, 98px),
+        (606px, 660px, 0px)
+    );
+
+    @include images($properties, $values);
+}
+
+@media screen and (max-width: map-get($breakpoints, smallScreen)) {
+    $properties: (width, height, margin-top);
+    $values: (
+        (230px, 288px, 0px),
+        (474px, 594px, 0px),
+        (352px, 442px, 0px),
+        (352px, 442px, 40px),
+        (352px, 442px, 0px),
+        (352px, 442px, 0px),
+        (474px, 546px, 0px)
+    );
+
+    @include images($properties, $values);
+}
